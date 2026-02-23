@@ -1,0 +1,74 @@
+{
+  "production_model": "gemini-3-flash-preview",
+  "api_base": "https://generativelanguage.googleapis.com/v1beta/models/",
+  "last_updated": "2026-02-23",
+  "deprecation_notes": [
+    {
+      "model": "gemini-2.5-flash-preview-09-2025",
+      "sunset_date": "2026-03-31",
+      "replacement": "gemini-3-flash-preview"
+    }
+  ],
+  "projects": [
+    {
+      "name": "BPO車検証OCR",
+      "repo": "Jotamiura/BPO",
+      "local_path": "/c/Users/miura/Desktop/BPO",
+      "file": "gas/bpo-processor/ocr.js",
+      "line": 8,
+      "pattern": "var GEMINI_MODEL = '{{MODEL}}';",
+      "current_model": "gemini-3-flash-preview",
+      "deploy": "clasp push (gas/bpo-processor/)"
+    },
+    {
+      "name": "車検リネーマー（自動）",
+      "repo": "Jotamiura/Syakensyo-Renamer",
+      "local_path": "/c/Users/miura/Syakensyo-Renamer",
+      "file": "code.gs",
+      "line": 20,
+      "pattern": "const pro_GEMINI_API_URL = \"https://generativelanguage.googleapis.com/v1beta/models/{{MODEL}}:generateContent?key=\";",
+      "current_model": "gemini-3-flash-preview",
+      "deploy": "clasp push"
+    },
+    {
+      "name": "承認リネーマー",
+      "repo": "Jotamiura/Syakensyo-Renamer-with-check",
+      "local_path": null,
+      "file": "ai_approval_workflow.gs",
+      "line": 29,
+      "pattern": "const ai_GEMINI_API_URL = \"https://generativelanguage.googleapis.com/v1beta/models/{{MODEL}}:generateContent?key=\";",
+      "current_model": "gemini-3-flash-preview",
+      "deploy": "clasp push"
+    },
+    {
+      "name": "保険受付票リネーマー",
+      "repo": "local-only (gas-projects/hoken_uketukehyo)",
+      "local_path": "/c/Users/miura/Desktop/gas-projects/hoken_uketukehyo",
+      "file": "code.gs",
+      "line": 69,
+      "pattern": "const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/{{MODEL}}:generateContent?key=${GEMINI_API_KEY}`;",
+      "current_model": "gemini-3-flash-preview",
+      "deploy": "clasp push"
+    },
+    {
+      "name": "Hoken-QA",
+      "repo": "Jotamiura/Hoken-QA",
+      "local_path": "/c/Users/miura/Desktop/Hoken-QA",
+      "file": "Hoken-QA/Code.js",
+      "line": 69,
+      "pattern": "const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/{{MODEL}}:generateContent?key=${GEMINI_API_KEY}`;",
+      "current_model": "gemini-2.5-flash",
+      "deploy": "clasp push"
+    },
+    {
+      "name": "車両カタログBot（テスト）",
+      "repo": "Jotamiura/vehicle-catalogue-chatbot",
+      "local_path": "/c/Users/miura/Desktop/vehicle-catalogue-chatbot",
+      "file": "test_gemini.py",
+      "line": 8,
+      "pattern": "model = GenerativeModel(\"{{MODEL}}\")",
+      "current_model": "gemini-2.5-flash",
+      "deploy": "N/A (Vertex AI / Python)"
+    }
+  ]
+}

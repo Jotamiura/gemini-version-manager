@@ -1,12 +1,18 @@
 {
-  "production_model": "gemini-3-flash-preview",
+  "production_model": "gemini-flash-latest",
+  "production_model_pro": "gemini-pro-latest",
   "api_base": "https://generativelanguage.googleapis.com/v1beta/models/",
-  "last_updated": "2026-02-23",
+  "last_updated": "2026-04-13",
   "deprecation_notes": [
     {
       "model": "gemini-2.5-flash-preview-09-2025",
       "sunset_date": "2026-03-31",
       "replacement": "gemini-3-flash-preview"
+    },
+    {
+      "model": "gemini-3-flash-preview",
+      "sunset_date": null,
+      "replacement": "gemini-flash-latest（-latestエイリアスに移行）"
     }
   ],
   "projects": [
@@ -17,8 +23,38 @@
       "file": "gas/bpo-processor/ocr.js",
       "line": 8,
       "pattern": "var GEMINI_MODEL = '{{MODEL}}';",
-      "current_model": "gemini-3-flash-preview",
+      "current_model": "gemini-flash-latest",
       "deploy": "clasp push (gas/bpo-processor/)"
+    },
+    {
+      "name": "BPO保険証券OCR",
+      "repo": "Jotamiura/BPO",
+      "local_path": "/c/Users/miura/Desktop/BPO",
+      "file": "gas/insurance-processor/ocr.js",
+      "line": 9,
+      "pattern": "var GEMINI_MODEL = '{{MODEL}}';",
+      "current_model": "gemini-pro-latest",
+      "deploy": "clasp push (gas/insurance-processor/)"
+    },
+    {
+      "name": "BPOリース契約書OCR",
+      "repo": "Jotamiura/BPO",
+      "local_path": "/c/Users/miura/Desktop/BPO",
+      "file": "gas/lease-processor/ocr.js",
+      "line": 9,
+      "pattern": "var GEMINI_MODEL = '{{MODEL}}';",
+      "current_model": "gemini-pro-latest",
+      "deploy": "clasp push (gas/lease-processor/)"
+    },
+    {
+      "name": "BPO管理画面（AI監査・書類分類）",
+      "repo": "Jotamiura/BPO",
+      "local_path": "/c/Users/miura/Desktop/BPO",
+      "file": "gas/bpo-admin/config.js",
+      "line": 63,
+      "pattern": "var GEMINI_MODEL = '{{MODEL}}';",
+      "current_model": "gemini-pro-latest",
+      "deploy": "clasp push (gas/bpo-admin/) + clasp deploy -i ..."
     },
     {
       "name": "車検リネーマー（自動）",
@@ -54,10 +90,20 @@
       "name": "Hoken-QA",
       "repo": "Jotamiura/Hoken-QA",
       "local_path": "/c/Users/miura/Desktop/Hoken-QA",
-      "file": "Hoken-QA/Code.js",
-      "line": 69,
-      "pattern": "const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/{{MODEL}}:generateContent?key=${GEMINI_API_KEY}`;",
-      "current_model": "gemini-2.5-flash",
+      "file": "Hoken-QA/コード.js",
+      "line": 3,
+      "pattern": "var GEMINI_MODEL = \"{{MODEL}}\";",
+      "current_model": "gemini-3-flash-preview",
+      "deploy": "clasp push"
+    },
+    {
+      "name": "信和商事様自賠責処理",
+      "repo": "local-only (gas-projects/信和商事様自賠責処理)",
+      "local_path": "/c/Users/miura/Desktop/gas-projects/信和商事様自賠責処理",
+      "file": "autoRenameJibaiseki.js",
+      "line": 33,
+      "pattern": "const pro_GEMINI_API_URL = \"https://generativelanguage.googleapis.com/v1beta/models/{{MODEL}}:generateContent?key=\";",
+      "current_model": "gemini-3-flash-preview",
       "deploy": "clasp push"
     },
     {
@@ -69,6 +115,17 @@
       "pattern": "model = GenerativeModel(\"{{MODEL}}\")",
       "current_model": "gemini-2.5-flash",
       "deploy": "N/A (Vertex AI / Python)"
+    },
+    {
+      "name": "Browser-Use（ブラウザ自動化）",
+      "repo": "local-only (browser-use-project)",
+      "local_path": "/c/Users/miura/Desktop/browser-use-project",
+      "file": "main.py",
+      "line": 24,
+      "pattern": "model=\"{{MODEL}}\"",
+      "current_model": "gemini-pro-latest",
+      "deploy": "N/A (ローカル実行)",
+      "note": "-latestエイリアス使用。自動追従のためバージョン管理対象外だが参照用に登録"
     }
   ]
 }

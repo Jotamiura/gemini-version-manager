@@ -126,6 +126,17 @@
       "current_model": "gemini-pro-latest",
       "deploy": "N/A (ローカル実行)",
       "note": "-latestエイリアス使用。自動追従のためバージョン管理対象外だが参照用に登録"
+    },
+    {
+      "name": "ICB向けtoyokumo試用Webチャット",
+      "repo": "local-only (icb-toyokumo-trial)",
+      "local_path": "/c/Users/miura/Desktop/icb-toyokumo-trial",
+      "file": "web/lib/gemini-bridge.ts",
+      "line": 11,
+      "pattern": "const MODEL = process.env.GEMINI_MODEL || \"{{MODEL}}\";",
+      "current_model": "gemini-flash-latest",
+      "deploy": "gcloud run deploy icb-toyokumo-web (catalogue-talker/asia-northeast1)",
+      "note": "Gemini API + 自前MCPブリッジ。GEMINI_MODEL環境変数で上書き可能（Cloud Run側で本番設定）"
     }
   ]
 }

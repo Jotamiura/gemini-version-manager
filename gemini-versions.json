@@ -137,6 +137,27 @@
       "current_model": "gemini-flash-latest",
       "deploy": "gcloud run deploy icb-toyokumo-web (catalogue-talker/asia-northeast1)",
       "note": "Gemini API + 自前MCPブリッジ。GEMINI_MODEL環境変数で上書き可能（Cloud Run側で本番設定）"
+    },
+    {
+      "name": "自動車税対応（橋本商会グループ親プロジェクト）",
+      "repo": "local-only (gas-projects/自動車税対応)",
+      "local_path": "/c/Users/miura/Desktop/gas-projects/自動車税対応",
+      "file": "src/config.js",
+      "line": 48,
+      "pattern": "    GEMINI_MODEL: '{{MODEL}}',",
+      "current_model": "gemini-flash-latest",
+      "deploy": "clasp push"
+    },
+    {
+      "name": "自動車税対応HSリース版",
+      "repo": "local-only (gas-projects/自動車税対応-HSリース)",
+      "local_path": "/c/Users/miura/Desktop/gas-projects/自動車税対応-HSリース",
+      "file": "src/config.js",
+      "line": 48,
+      "pattern": "    GEMINI_MODEL: '{{MODEL}}',",
+      "current_model": "gemini-flash-latest",
+      "deploy": "clasp push",
+      "note": "親プロジェクト（自動車税対応）からフォーク。ロジック差分は HSリース以外の混入検出+Chatwork通知のみ。Gemini呼び出し箇所は共通"
     }
   ]
 }

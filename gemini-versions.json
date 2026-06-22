@@ -1,8 +1,9 @@
 {
-  "production_model": "gemini-flash-latest",
+  "production_model": "gemini-3.5-flash",
   "production_model_pro": "gemini-pro-latest",
   "api_base": "https://generativelanguage.googleapis.com/v1beta/models/",
-  "last_updated": "2026-04-13",
+  "last_updated": "2026-06-23",
+  "standard_note": "2026-06-23 三浦さん指定: 標準flashを gemini-3.5-flash に固定（3.5系に -latest 別名は無く404。これが最新flash）。従来の -latest 自動追従からの方針変更。高精度OCR/粗利判断など意図的にProを使う用途は production_model_pro (gemini-pro-latest) を維持し、3.5-flashへ下げない。",
   "deprecation_notes": [
     {
       "model": "gemini-2.5-flash-preview-09-2025",
@@ -158,6 +159,50 @@
       "current_model": "gemini-flash-latest",
       "deploy": "clasp push",
       "note": "親プロジェクト（自動車税対応）からフォーク。ロジック差分は HSリース以外の混入検出+Chatwork通知のみ。Gemini呼び出し箇所は共通"
+    },
+    {
+      "name": "GATCH 納品書OCR",
+      "repo": "local-only (GATCH_MCP)",
+      "local_path": "/c/Users/miura/Desktop/GATCH_MCP",
+      "file": "ocr_invoice.py",
+      "line": 24,
+      "pattern": "GEMINI_API_URL = \"https://generativelanguage.googleapis.com/v1beta/models/{{MODEL}}:generateContent\"",
+      "current_model": "gemini-flash-latest",
+      "deploy": "N/A (Python/bridge_server経由)",
+      "note": "納品書PDF → Gemini Vision → 構造化JSON。Phase 4-Bis E2E検証済 (2026-05-14、いすゞDPD8明細を完全抽出)"
+    },
+    {
+      "name": "GATCH 項目マッチング",
+      "repo": "local-only (GATCH_MCP)",
+      "local_path": "/c/Users/miura/Desktop/GATCH_MCP",
+      "file": "item_matcher.py",
+      "line": 34,
+      "pattern": "GEMINI_MODEL = os.environ.get(\"ITEM_MATCHER_GEMINI_MODEL\", \"{{MODEL}}\")",
+      "current_model": "gemini-pro-latest",
+      "deploy": "N/A (Python/bridge_server経由)",
+      "note": "納品書↔既存整備明細 AI項目マッチング。粗利集計に影響する高判断のためProを既定採用。環境変数 ITEM_MATCHER_GEMINI_MODEL で上書き可。Phase 4-Bis"
+    },
+    {
+      "name": "HS_portal 受付音声構造化",
+      "repo": "Jotamiura/HS_portal",
+      "local_path": "/c/Users/miura/Desktop/HS_portal",
+      "file": "apps/portal/server/routes/structure.ts",
+      "line": 48,
+      "pattern": "const model = c.env.GEMINI_MODEL?.trim() || \"{{MODEL}}\";",
+      "current_model": "gemini-3.5-flash",
+      "deploy": "wrangler pages deploy (hs-portal-next) / Cloudflare Pages Functions",
+      "note": "受付音声→構造化JSON。抽出精度重視で 3.5-flash を明示固定（-lat は content 抽出が弱く採用せず）。Pages secret GEMINI_MODEL で上書き可。2026-06-11 実測6ケース全通過"
+    },
+    {
+      "name": "サロンボード ブログ本文生成",
+      "repo": "Jotamiura/salonboard-blog-poster",
+      "local_path": "/c/Users/miura/Desktop/salonboard-blog-poster",
+      "file": "src/generate.py",
+      "line": 31,
+      "pattern": "MODEL = os.getenv(\"GEMINI_MODEL\", \"{{MODEL}}\")",
+      "current_model": "gemini-3.5-flash",
+      "deploy": "N/A (ローカル実行 / Windowsタスクスケジューラ)",
+      "note": "画像+コメント→ブログ本文(vision)。google-genai SDK。flash既定、高精度時は GEMINI_MODEL_PRO=gemini-pro-latest。環境変数 GEMINI_MODEL で上書き可。2026-06-19 生成動作確認"
     }
   ]
 }

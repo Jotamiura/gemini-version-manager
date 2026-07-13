@@ -203,6 +203,28 @@
       "current_model": "gemini-3.5-flash",
       "deploy": "N/A (ローカル実行 / Windowsタスクスケジューラ)",
       "note": "画像+コメント→ブログ本文(vision)。google-genai SDK。flash既定、高精度時は GEMINI_MODEL_PRO=gemini-pro-latest。環境変数 GEMINI_MODEL で上書き可。2026-06-19 生成動作確認"
+    },
+    {
+      "name": "vault リンク取り込み(link_enrich)",
+      "repo": "Jotamiura/obsidian-vault",
+      "local_path": "/e/workspace/obsidian",
+      "file": "scripts/link_enrich.py",
+      "line": 25,
+      "pattern": "MODEL = \"{{MODEL}}\"",
+      "current_model": "gemini-3.5-flash",
+      "deploy": "N/A (ローカル実行 / obsidian-intake スキルから呼ぶ)",
+      "note": "URL本文+周辺情報を url_context + google_search ツールで調査しMarkdown出力。LLM分業ルール(2026-07-13): Web調査系単純作業はGemini。2026-07-13 新規"
+    },
+    {
+      "name": "orderlist_check 新車注文書OCR・装備突合",
+      "repo": "local-only (gas-projects/orderlist_check)",
+      "local_path": "/c/Users/miura/Desktop/gas-projects/orderlist_check",
+      "file": "config.js",
+      "line": 63,
+      "pattern": "  MODEL: '{{MODEL}}',",
+      "current_model": "gemini-pro-latest",
+      "deploy": "clasp push",
+      "note": "新車注文書PDF→構造化JSON（装備明細）＋ディーラー×顧客 装備突合のAI判定。装備差異検出が肝で精度重視のためPro既定。2026-06-30 新規"
     }
   ]
 }

@@ -225,6 +225,16 @@
       "current_model": "gemini-pro-latest",
       "deploy": "clasp push",
       "note": "新車注文書PDF→構造化JSON（装備明細）＋ディーラー×顧客 装備突合のAI判定。装備差異検出が肝で精度重視のためPro既定。2026-06-30 新規"
+    },
+    {
+      "name": "会社営業カレンダー 勤務予定表PDF取込",
+      "repo": "Jotamiura/company-calendar",
+      "local_path": "/e/workspace/projects/company-calendar",
+      "file": "pdf_intake.js",
+      "line": 14,
+      "pattern": "var GEMINI_MODEL = '{{MODEL}}';",
+      "current_model": "gemini-pro-latest",
+      "deploy": "clasp push (リポ直下)"
     }
   ]
 }

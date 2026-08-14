@@ -68,11 +68,12 @@
       "name": "車検リネーマー（自動）",
       "repo": "Jotamiura/Syakensyo-Renamer",
       "local_path": "/c/Users/miura/Syakensyo-Renamer",
-      "file": "code.gs",
-      "line": 20,
+      "file": "code.js",
+      "line": 18,
       "pattern": "const pro_GEMINI_API_URL = \"https://generativelanguage.googleapis.com/v1beta/models/{{MODEL}}:generateContent?key=\";",
       "current_model": "gemini-flash-latest",
-      "deploy": "clasp push"
+      "deploy": "clasp push",
+      "note": "2026-08-15 GitHub側で code.gs -> code.js リネーム済み(別マシン作業)。レジストリ追随"
     },
     {
       "name": "承認リネーマー",

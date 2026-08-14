@@ -1,9 +1,9 @@
 {
-  "production_model": "gemini-3.5-flash",
+  "production_model": "gemini-flash-latest",
   "production_model_pro": "gemini-pro-latest",
   "api_base": "https://generativelanguage.googleapis.com/v1beta/models/",
-  "last_updated": "2026-06-23",
-  "standard_note": "2026-06-23 三浦さん指定: 標準flashを gemini-3.5-flash に固定（3.5系に -latest 別名は無く404。これが最新flash）。従来の -latest 自動追従からの方針変更。高精度OCR/粗利判断など意図的にProを使う用途は production_model_pro (gemini-pro-latest) を維持し、3.5-flashへ下げない。",
+  "last_updated": "2026-08-15",
+  "standard_note": "2026-06-23 三浦さん指定: 標準flashを gemini-3.5-flash に固定（3.5系に -latest 別名は無く404。これが最新flash）。従来の -latest 自動追従からの方針変更。高精度OCR/粗利判断など意図的にProを使う用途は production_model_pro (gemini-pro-latest) を維持し、3.5-flashへ下げない。 ／ 2026-08-15 三浦さん決定: 全プロジェクト -latest 統一へ回帰(「全部レイテストでいこう」)。3.7 Flash GA で価格逆転(3.5固定 $1.50/$9.00 > 3.7 $0.75/$3.75 年内・2027年以降も $1.50/$7.50)が決め手。Vertex AI 経由(Hoken-QA・車両カタログBot)は -latest 別名が無いため対象外。",
   "alias_status": {
     "checked": "2026-08-15",
     "gemini-flash-latest": "gemini-3.7-flash",
@@ -71,7 +71,7 @@
       "file": "code.gs",
       "line": 20,
       "pattern": "const pro_GEMINI_API_URL = \"https://generativelanguage.googleapis.com/v1beta/models/{{MODEL}}:generateContent?key=\";",
-      "current_model": "gemini-3-flash-preview",
+      "current_model": "gemini-flash-latest",
       "deploy": "clasp push"
     },
     {
@@ -81,8 +81,9 @@
       "file": "ai_approval_workflow.gs",
       "line": 29,
       "pattern": "const ai_GEMINI_API_URL = \"https://generativelanguage.googleapis.com/v1beta/models/{{MODEL}}:generateContent?key=\";",
-      "current_model": "gemini-3-flash-preview",
-      "deploy": "clasp push"
+      "current_model": "gemini-flash-latest",
+      "deploy": "clasp push",
+      "note": "2026-08-15 GitHub上のファイルは -latest に更新済み。⚠️ ローカルクローン・.clasp.json が無く GAS 実体への反映は未実施(scriptId 要確認)"
     },
     {
       "name": "保険受付票リネーマー",
@@ -91,27 +92,29 @@
       "file": "code.gs",
       "line": 69,
       "pattern": "const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/{{MODEL}}:generateContent?key=${GEMINI_API_KEY}`;",
-      "current_model": "gemini-3-flash-preview",
-      "deploy": "clasp push"
+      "current_model": "gemini-pro-latest",
+      "deploy": "clasp push",
+      "note": "2026-08-15 実査: レジストリは 3-flash-preview のままだったが実コードは既に gemini-pro-latest 化されていた(レジストリ陳腐化を修正)"
     },
     {
       "name": "Hoken-QA",
       "repo": "Jotamiura/Hoken-QA",
       "local_path": "/c/Users/miura/Desktop/Hoken-QA",
-      "file": "Hoken-QA/コード.js",
-      "line": 3,
+      "file": "Hoken-QA/code.js",
+      "line": 27,
       "pattern": "var GEMINI_MODEL = \"{{MODEL}}\";",
-      "current_model": "gemini-3-flash-preview",
-      "deploy": "clasp push"
+      "current_model": "gemini-2.5-flash",
+      "deploy": "clasp push",
+      "note": "2026-08-15 実査: Vertex AI 経由(getVertexAIUrl_)に移行済み。Vertex に -latest 別名は無く統一対象外。2.5系は旧世代のため 3.x 系への引き上げは別途判断"
     },
     {
       "name": "信和商事様自賠責処理",
       "repo": "local-only (gas-projects/信和商事様自賠責処理)",
       "local_path": "/c/Users/miura/Desktop/gas-projects/信和商事様自賠責処理",
       "file": "autoRenameJibaiseki.js",
-      "line": 33,
+      "line": 37,
       "pattern": "const pro_GEMINI_API_URL = \"https://generativelanguage.googleapis.com/v1beta/models/{{MODEL}}:generateContent?key=\";",
-      "current_model": "gemini-3-flash-preview",
+      "current_model": "gemini-flash-latest",
       "deploy": "clasp push"
     },
     {
@@ -122,7 +125,8 @@
       "line": 8,
       "pattern": "model = GenerativeModel(\"{{MODEL}}\")",
       "current_model": "gemini-2.5-flash",
-      "deploy": "N/A (Vertex AI / Python)"
+      "deploy": "N/A (Vertex AI / Python)",
+      "note": "Vertex AI SDK・テスト用。-latest 別名が無く統一対象外(2026-08-15)"
     },
     {
       "name": "Browser-Use（ブラウザ自動化）",
@@ -171,12 +175,12 @@
       "name": "GATCH 納品書OCR",
       "repo": "local-only (GATCH_MCP)",
       "local_path": "/c/Users/miura/Desktop/GATCH_MCP",
-      "file": "ocr_invoice.py",
+      "file": "archive/ocr_invoice.py",
       "line": 24,
       "pattern": "GEMINI_API_URL = \"https://generativelanguage.googleapis.com/v1beta/models/{{MODEL}}:generateContent\"",
       "current_model": "gemini-flash-latest",
       "deploy": "N/A (Python/bridge_server経由)",
-      "note": "納品書PDF → Gemini Vision → 構造化JSON。Phase 4-Bis E2E検証済 (2026-05-14、いすゞDPD8明細を完全抽出)"
+      "note": "2026-08-15 実査: ocr_invoice.py は archive/ へ移動済み(稼働停止とみられる)。現役の Gemini 消費は item_matcher.py のみ"
     },
     {
       "name": "GATCH 項目マッチング",
@@ -194,31 +198,31 @@
       "repo": "Jotamiura/HS_portal",
       "local_path": "/c/Users/miura/Desktop/HS_portal",
       "file": "apps/portal/server/routes/structure.ts",
-      "line": 48,
+      "line": 108,
       "pattern": "const model = c.env.GEMINI_MODEL?.trim() || \"{{MODEL}}\";",
-      "current_model": "gemini-3.5-flash",
+      "current_model": "gemini-flash-latest",
       "deploy": "wrangler pages deploy (hs-portal-next) / Cloudflare Pages Functions",
-      "note": "受付音声→構造化JSON。抽出精度重視で 3.5-flash を明示固定（-lat は content 抽出が弱く採用せず）。Pages secret GEMINI_MODEL で上書き可。2026-06-11 実測6ケース全通過"
+      "note": "2026-08-15 コード既定値を -latest 化(コミット済み)。⚠️ wrangler pages deploy は未実施 — 過去に「-latest系は content 抽出が弱く 3.5 固定」の実測(2026-06-11)があった案件のため、検証してからデプロイ推奨。Pages secret GEMINI_MODEL が設定されていれば本番はそちらが優先"
     },
     {
       "name": "サロンボード ブログ本文生成",
       "repo": "Jotamiura/salonboard-blog-poster",
       "local_path": "/c/Users/miura/Desktop/salonboard-blog-poster",
-      "file": "src/generate.py",
-      "line": 31,
-      "pattern": "MODEL = os.getenv(\"GEMINI_MODEL\", \"{{MODEL}}\")",
-      "current_model": "gemini-3.5-flash",
+      "file": "src/spike_external_topic.py",
+      "line": 113,
+      "pattern": "model = os.getenv(\"GEMINI_MODEL_PRO\", \"{{MODEL}}\")",
+      "current_model": "gemini-pro-latest",
       "deploy": "N/A (ローカル実行 / Windowsタスクスケジューラ)",
-      "note": "画像+コメント→ブログ本文(vision)。google-genai SDK。flash既定、高精度時は GEMINI_MODEL_PRO=gemini-pro-latest。環境変数 GEMINI_MODEL で上書き可。2026-06-19 生成動作確認"
+      "note": "2026-08-15 実査: 本文生成(generate.py)は OpenAI gpt-4o へ移行済みで Gemini を使っていない。Gemini 使用は外部トピック取得スパイク(spike_external_topic.py)の GEMINI_MODEL_PRO 既定のみ"
     },
     {
       "name": "vault リンク取り込み(link_enrich)",
       "repo": "Jotamiura/obsidian-vault",
       "local_path": "/e/workspace/obsidian",
       "file": "scripts/link_enrich.py",
-      "line": 25,
+      "line": 39,
       "pattern": "MODEL = \"{{MODEL}}\"",
-      "current_model": "gemini-3.5-flash",
+      "current_model": "gemini-flash-latest",
       "deploy": "N/A (ローカル実行 / obsidian-intake スキルから呼ぶ)",
       "note": "URL本文+周辺情報を url_context + google_search ツールで調査しMarkdown出力。LLM分業ルール(2026-07-13): Web調査系単純作業はGemini。2026-07-13 新規"
     },
@@ -250,7 +254,7 @@
       "file": "gas/code.js",
       "line": 49,
       "pattern": "  GEMINI_MODEL_FAST: '{{MODEL}}',",
-      "current_model": "gemini-3.5-flash",
+      "current_model": "gemini-flash-latest",
       "deploy": "clasp push (gas/)",
       "note": "京都営業所の複合機FAX PDF→送信元/書類種別の構造化判定。2段判定の1段目(全件)。2026-08-12 Pro単独(1件20〜60秒)が遅すぎたため2段化"
     },

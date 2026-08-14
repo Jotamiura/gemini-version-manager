@@ -203,7 +203,7 @@
       "pattern": "const model = c.env.GEMINI_MODEL?.trim() || \"{{MODEL}}\";",
       "current_model": "gemini-flash-latest",
       "deploy": "wrangler pages deploy (hs-portal-next) / Cloudflare Pages Functions",
-      "note": "2026-08-15 コード既定値を -latest 化(コミット済み)。⚠️ wrangler pages deploy は未実施 — 過去に「-latest系は content 抽出が弱く 3.5 固定」の実測(2026-06-11)があった案件のため、検証してからデプロイ推奨。Pages secret GEMINI_MODEL が設定されていれば本番はそちらが優先"
+      "note": "2026-08-15 コード既定値を -latest 化(コミット済み)。三浦さん確認: HS_portal は未利用のためデプロイ保留リスクなし — 次回利用開始時のデプロイで反映される。Pages secret GEMINI_MODEL が設定されていれば本番はそちらが優先"
     },
     {
       "name": "サロンボード ブログ本文生成",

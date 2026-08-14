@@ -30,6 +30,11 @@ fi
 # Windows環境でPythonの日本語出力を正しく扱う
 export PYTHONIOENCODING=utf-8
 
+# LANG 未設定の環境(Claude Code の Bash ツール等)では grep -P が
+# 「-P supports only unibyte and UTF-8 locales」で全滅し、全プロジェクトが
+# NOT_FOUND になる(2026-08-15 実害)。UTF-8 ロケールを明示して防ぐ
+export LC_ALL=C.UTF-8
+
 # Git Bash パス (/c/...) → Windows パス (C:/...) に変換
 to_win_path() {
   echo "$1" | sed 's|^/\([a-zA-Z]\)/|\1:/|'
@@ -179,6 +184,12 @@ if [ $MISMATCH -gt 0 ]; then
   fi
 
   exit 1
+fi
+
+if [ $NOTFOUND -gt 0 ]; then
+  echo ""
+  echo "WARNING: $NOTFOUND 件が未検出(NOT_FOUND)のため「全一致」とは断定できません。上のWARNING行を確認してください。"
+  exit 2
 fi
 
 echo ""

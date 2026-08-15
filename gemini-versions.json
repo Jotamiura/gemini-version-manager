@@ -276,10 +276,10 @@
       "local_path": "/e/workspace/projects/onestyle-invoice-ocr",
       "file": "wrangler.toml",
       "line": 11,
-      "pattern": "GEMINI_MODEL_DEFAULT = \"{{MODEL}}\"",
-      "current_model": "gemini-pro-latest",
+      "pattern": "GEMINI_MODEL_FLASH = \"{{MODEL}}\"",
+      "current_model": "gemini-flash-latest",
       "deploy": "npm run deploy (Cloudflare Pages)",
-      "note": "Cloudflare Pages Functions から直接 Gemini API。既定 pro、画面で flash 切替可 (GEMINI_MODEL_FAST = gemini-flash-latest)。2026-08-16 追加"
+      "note": "Cloudflare Pages Functions から直接 Gemini API。既定 flash (2026-08-16 三浦さん決定)、画面で pro 切替可 (GEMINI_MODEL_PRO = gemini-pro-latest)"
     }
   ]
 }

@@ -269,6 +269,17 @@
       "current_model": "gemini-pro-latest",
       "deploy": "clasp push (gas/)",
       "note": "納品書/個別請求書/合計請求書疑い/低信頼だけProで再判定。誤ると北極星(GATCH仕入合計)に波及する「判断」のみPro"
+    },
+    {
+      "name": "OneStyle請求書OCR",
+      "repo": "Jotamiura/onestyle-invoice-ocr",
+      "local_path": "/e/workspace/projects/onestyle-invoice-ocr",
+      "file": "wrangler.toml",
+      "line": 11,
+      "pattern": "GEMINI_MODEL_DEFAULT = \"{{MODEL}}\"",
+      "current_model": "gemini-pro-latest",
+      "deploy": "npm run deploy (Cloudflare Pages)",
+      "note": "Cloudflare Pages Functions から直接 Gemini API。既定 pro、画面で flash 切替可 (GEMINI_MODEL_FAST = gemini-flash-latest)。2026-08-16 追加"
     }
   ]
 }

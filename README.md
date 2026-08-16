@@ -17,13 +17,17 @@ Google 側の自動切替(2週間前告知)で常に最新実体へ追従する�
 (この README には転記しない — 2026-08-15 に README 側の表が大幅陳腐化していたため廃止)。
 
 - `alias_status`: `-latest` が実際にどのモデルを指しているかの実測記録
-- `projects[].current_model`: 各プロジェクトのコード上の指定値
+- `projects[].current_model`: 各プロジェクトのコード上の指定値。`bash scan.sh` はこの値と実コードを突き合わせる(2026-08-16〜。以前は単一 `production_model` と全プロジェクトを比較していたため、意図的に pro を使う組が毎回 MISMATCH と誤報されていた)
+- `projects[].pattern`: 実コードの記法テンプレート。モデル値部分を `{{MODEL}}` で表す(例: `var GEMINI_MODEL = '{{MODEL}}';`)。`scan.sh` の検出パターンの正。**実コードの書き方(クォートの種類・変数名等)を変えたら、ここも合わせて更新すること** — ズレると NOT_FOUND になる
+- `projects[].allow_fixed_model`: `true` を付けると `-latest` 統一の対象外として scan.sh の WARN を抑制する(Vertex AI 経由など `-latest` 別名が存在しないプロジェクト用。現状 Hoken-QA / 車両カタログBot(テスト) に設定済み)
+- `projects[].local_path` が **この端末に存在しない**プロジェクト(Mac 側専用リポ等)は `scan.sh` 上で `SKIP` として区別される(`NOT_FOUND` = レジストリ記述と実コードのズレ、`SKIP` = そもそもこの端末で確認できない、を混同しないための区別)
 
 ## スクリプト
 
 | スクリプト | 役割 |
 |---|---|
-| `bash scan.sh` | 全プロジェクトのコードを走査してモデル指定を確認(⚠️ 現在は単一 production_model と比較する旧設計のため、pro 使い分け組が MISMATCH と誤報される — 刷新 Issue あり) |
+| `bash scan.sh` | 全プロジェクトのコードを走査し、**各プロジェクトの `current_model`**(レジストリ側)と実コードの記述を突き合わせて確認。実処理は `scan_core.py`(下記) |
+| `scan_core.py` | `scan.sh` から呼ばれるスキャナ本体。`projects[].pattern` の `{{MODEL}}` プレースホルダを正規表現化し、プロジェクトごとの実コード記法にピンポイントで一致させる(URLテンプレート `models/${model}` 等の誤検出を防ぐ設計。2026-08-16 刷新 issue #1) |
 | `python check_latest_switch.py` | **-latest 実体の切替検知 + スモークテスト + Chatwork 通知**(下記) |
 | `run_latest_check.ps1` | ↑ の Task Scheduler ラッパー(ログ: `logs/latest-check-*.log`) |
 | `setup_latest_check_task.ps1` | 毎朝 8:20 のタスク `gemini-latest-switch-check` を登録(初回1回。2026-08-15 登録済み) |
@@ -47,11 +51,13 @@ Google 側の自動切替(2週間前告知)で常に最新実体へ追従する�
 
 ## モデルを手動で変更する場合の手順
 
-1. `gemini-versions.json` の `production_model` を更新
-2. `bash scan.sh` で不一致箇所を確認
+1. 対象プロジェクトの `gemini-versions.json` 内 `current_model` を新しい値に更新(意図的な決定。まずレジストリを書き換える)
+2. `bash scan.sh` を実行 → 実コードとレジストリの差(MISMATCH)として検出されることを確認
 3. 各プロジェクトのソースコードを更新(⚠️ **clasp push の前に必ず `git fetch`** — 別マシン更新の巻き戻し事故防止。vault `clasp運用の落とし穴` 参照)
 4. 各プロジェクトで `clasp push` → `git commit && git push`
-5. `gemini-versions.json` の `current_model` と `last_updated` を更新
+5. `bash scan.sh` を再実行し MATCH に戻ったことを確認、`gemini-versions.json` の `last_updated` を更新
+
+`bash scan.sh --update` は MISMATCH のプロジェクト一覧と手動更新の手引きを表示するだけで、ファイルは一切書き換えない(各プロジェクトのソースは本スクリプトの管理外のため)。
 
 ## 注意事項
 

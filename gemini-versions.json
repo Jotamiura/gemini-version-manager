@@ -59,7 +59,7 @@
       "repo": "Jotamiura/BPO",
       "local_path": "/c/Users/miura/Desktop/BPO",
       "file": "gas/bpo-admin/config.js",
-      "line": 63,
+      "line": 131,
       "pattern": "var GEMINI_MODEL = '{{MODEL}}';",
       "current_model": "gemini-pro-latest",
       "deploy": "clasp push (gas/bpo-admin/) + clasp deploy -i ..."
@@ -106,7 +106,8 @@
       "pattern": "var GEMINI_MODEL = \"{{MODEL}}\";",
       "current_model": "gemini-2.5-flash",
       "deploy": "clasp push",
-      "note": "2026-08-15 実査: Vertex AI 経由(getVertexAIUrl_)に移行済み。Vertex に -latest 別名は無く統一対象外。2.5系は旧世代のため 3.x 系への引き上げは別途判断"
+      "note": "2026-08-15 実査: Vertex AI 経由(getVertexAIUrl_)に移行済み。Vertex に -latest 別名は無く統一対象外。2.5系は旧世代のため 3.x 系への引き上げは別途判断",
+      "allow_fixed_model": true
     },
     {
       "name": "信和商事様自賠責処理",
@@ -127,7 +128,8 @@
       "pattern": "model = GenerativeModel(\"{{MODEL}}\")",
       "current_model": "gemini-2.5-flash",
       "deploy": "N/A (Vertex AI / Python)",
-      "note": "Vertex AI SDK・テスト用。-latest 別名が無く統一対象外(2026-08-15)"
+      "note": "Vertex AI SDK・テスト用。-latest 別名が無く統一対象外(2026-08-15)",
+      "allow_fixed_model": true
     },
     {
       "name": "Browser-Use（ブラウザ自動化）",
@@ -189,7 +191,7 @@
       "local_path": "/c/Users/miura/Desktop/GATCH_MCP",
       "file": "item_matcher.py",
       "line": 34,
-      "pattern": "GEMINI_MODEL = os.environ.get(\"ITEM_MATCHER_GEMINI_MODEL\", \"{{MODEL}}\")",
+      "pattern": "GEMINI_MODEL = os.environ.get('ITEM_MATCHER_GEMINI_MODEL', '{{MODEL}}')",
       "current_model": "gemini-pro-latest",
       "deploy": "N/A (Python/bridge_server経由)",
       "note": "納品書↔既存整備明細 AI項目マッチング。粗利集計に影響する高判断のためProを既定採用。環境変数 ITEM_MATCHER_GEMINI_MODEL で上書き可。Phase 4-Bis"
@@ -200,7 +202,7 @@
       "local_path": "/c/Users/miura/Desktop/HS_portal",
       "file": "apps/portal/server/routes/structure.ts",
       "line": 108,
-      "pattern": "const model = c.env.GEMINI_MODEL?.trim() || \"{{MODEL}}\";",
+      "pattern": "const model = env.GEMINI_MODEL?.trim() || \"{{MODEL}}\";",
       "current_model": "gemini-flash-latest",
       "deploy": "wrangler pages deploy (hs-portal-next) / Cloudflare Pages Functions",
       "note": "2026-08-15 コード既定値を -latest 化(コミット済み)。三浦さん確認: HS_portal は未利用のためデプロイ保留リスクなし — 次回利用開始時のデプロイで反映される。Pages secret GEMINI_MODEL が設定されていれば本番はそちらが優先"
@@ -253,7 +255,7 @@
       "repo": "local-only (E:/workspace/projects/fax-drive-router)",
       "local_path": "/e/workspace/projects/fax-drive-router",
       "file": "gas/code.js",
-      "line": 49,
+      "line": 58,
       "pattern": "  GEMINI_MODEL_FAST: '{{MODEL}}',",
       "current_model": "gemini-flash-latest",
       "deploy": "clasp push (gas/)",
@@ -264,7 +266,7 @@
       "repo": "local-only (E:/workspace/projects/fax-drive-router)",
       "local_path": "/e/workspace/projects/fax-drive-router",
       "file": "gas/code.js",
-      "line": 50,
+      "line": 59,
       "pattern": "  GEMINI_MODEL_JUDGE: '{{MODEL}}',",
       "current_model": "gemini-pro-latest",
       "deploy": "clasp push (gas/)",

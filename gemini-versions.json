@@ -78,13 +78,13 @@
     {
       "name": "承認リネーマー",
       "repo": "Jotamiura/Syakensyo-Renamer-with-check",
-      "local_path": null,
+      "local_path": "E:/workspace/projects/Syakensyo-Renamer-with-check",
       "file": "ai_approval_workflow.gs",
       "line": 29,
       "pattern": "const ai_GEMINI_API_URL = \"https://generativelanguage.googleapis.com/v1beta/models/{{MODEL}}:generateContent?key=\";",
       "current_model": "gemini-flash-latest",
       "deploy": "clasp push",
-      "note": "2026-08-15 GitHub上のファイルは -latest に更新済み。⚠️ ローカルクローン・.clasp.json が無く GAS 実体への反映は未実施(scriptId 要確認)"
+      "note": "2026-08-22 GAS実体へ反映済み(Issue #2 クローズ)。scriptId 11c6_qNxjg9r5cBS3U0ihW2x9Uk4fLBPg1WGQm4G3bZ2Bhs9PxISwxZBe を三浦さんから受領し .clasp.json をリポに追加 -> clasp push -> clasp pull で gemini-flash-latest 稼働を確認。push 前の GAS は commit 2fd681f 相当で2コミット遅れ(Drive API v3 共有ドライブ対応 + -latest)。GAS側の独自編集は無し"
     },
     {
       "name": "保険受付票リネーマー",

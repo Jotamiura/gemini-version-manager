@@ -282,6 +282,16 @@
       "current_model": "gemini-flash-latest",
       "deploy": "npm run deploy (Cloudflare Pages)",
       "note": "Cloudflare Pages Functions から直接 Gemini API。既定 flash (2026-08-16 三浦さん決定)、画面で pro 切替可 (GEMINI_MODEL_PRO = gemini-pro-latest)"
+    },
+    {
+      "name": "宮古島事故 協定金額抽出",
+      "repo": "Jotamiura/miyakojima-ota",
+      "local_path": "/c/Users/miura/Desktop/miyakojima-ota",
+      "file": "gas/accident_form/kyotei.js",
+      "line": null,
+      "pattern": "models/{{MODEL}}:generateContent",
+      "current_model": "gemini-flash-latest",
+      "deploy": "clasp push (gas/accident_form/)"
     }
   ]
 }

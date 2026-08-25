@@ -292,6 +292,28 @@
       "pattern": "models/{{MODEL}}:generateContent",
       "current_model": "gemini-flash-latest",
       "deploy": "clasp push (gas/accident_form/)"
+    },
+    {
+      "name": "ICB/J-Barrel B/L OCR (Web)",
+      "repo": "Jotamiura/icb-bl-ocr-trial",
+      "local_path": "/c/Users/miura/Desktop/gas-projects/icb-bl-ocr-trial",
+      "file": "src/lib/schema.ts",
+      "line": null,
+      "pattern": "name: '{{MODEL}}'",
+      "current_model": "gemini-flash-latest",
+      "deploy": "npx wrangler pages deploy dist --branch=main (Cloudflare Pages / bl-ocr-trial)",
+      "note": "3レーン比較 (tuned=flash-latest+社別 / lite=flash-lite-latest+社別 / bare=flash-latest素)。pro-latest は MODELS に定義だけ残しレーン未使用。単価は src/lib/cost.ts の PRICES。2026-08-25 実測で flash-latest→gemini-3.7-flash。画面の表示名 (MODELS[].display) は \"Gemini 3.5 Flash\" のままで実体と2世代ズレている (要修正)"
+    },
+    {
+      "name": "ICB/J-Barrel B/L OCR (GASワークフロー)",
+      "repo": "Jotamiura/icb-bl-ocr-trial",
+      "local_path": "/c/Users/miura/Desktop/gas-projects/icb-bl-ocr-trial",
+      "file": "gas/bl-workflow/code.js",
+      "line": null,
+      "pattern": "GEMINI_MODEL: '{{MODEL}}'",
+      "current_model": "gemini-flash-latest",
+      "deploy": "clasp push (記録SS TEST_B/L処理 にバインド)",
+      "note": "処理前フォルダ一括OCR。船社自動判定のため1件あたりAPI2回 (純正グローバル→社別)。単価は CONFIG.PRICE_INPUT_PER_M / PRICE_OUTPUT_PER_M で Web版 cost.ts のミラー"
     }
   ]
 }

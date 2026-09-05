@@ -314,6 +314,17 @@
       "current_model": "gemini-flash-latest",
       "deploy": "clasp push (記録SS TEST_B/L処理 にバインド)",
       "note": "処理前フォルダ一括OCR。船社自動判定のため1件あたりAPI2回 (純正グローバル→社別)。単価は CONFIG.PRICE_INPUT_PER_M / PRICE_OUTPUT_PER_M で Web版 cost.ts のミラー"
+    },
+    {
+      "name": "キッチンカー稼働管理アプリ 許可証OCR",
+      "repo": "Jotamiura/kitchencar-inquiry-ai",
+      "local_path": "/e/workspace/projects/kitchencar-inquiry-ai",
+      "file": "apps/kadou/wrangler.toml",
+      "line": 17,
+      "pattern": "GEMINI_MODEL = \"{{MODEL}}\"",
+      "current_model": "gemini-pro-latest",
+      "deploy": "cd apps/kadou && pnpm pages:deploy（Pages の var。secret GEMINI_API_KEY は別）",
+      "note": "営業許可証（写真/PDF）の構造化 OCR。response_schema で PermitOcr 固定。読めない項目は null。scope は推論しない（server/ocr.ts）"
     }
   ]
 }

@@ -104,9 +104,9 @@
       "file": "Hoken-QA/code.js",
       "line": 27,
       "pattern": "var GEMINI_MODEL = \"{{MODEL}}\";",
-      "current_model": "gemini-2.5-flash",
+      "current_model": "gemini-3.5-flash",
       "deploy": "clasp push",
-      "note": "2026-08-15 実査: Vertex AI 経由(getVertexAIUrl_)に移行済み。Vertex に -latest 別名は無く統一対象外。2.5系は旧世代のため 3.x 系への引き上げは別途判断",
+      "note": "2026-08-15 実査: Vertex AI 経由(getVertexAIUrl_)に移行済み。Vertex に -latest 別名は無く統一対象外。2.5系は旧世代のため 3.x 系への引き上げは別途判断 ／ 2026-09-27: Google Cloud の 2.5 廃止通知(bpo-drive)を受けて gemini-3.5-flash へ(Hoken-QA #5 / PR #6)。東京リージョンで使える Gemini 3 系 Flash は 3.5 だけ(3.7/3.8 は global と us/eu のみ)。3.5 Flash は 2027-05-19 以降に廃止予定",
       "allow_fixed_model": true
     },
     {
